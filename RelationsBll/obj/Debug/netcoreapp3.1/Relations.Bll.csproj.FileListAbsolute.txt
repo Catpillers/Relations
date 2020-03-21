@@ -1,0 +1,12 @@
+C:\Users\Pusheen\Relations\RelationsBll\bin\Debug\netcoreapp3.1\Relations.Bll.deps.json
+C:\Users\Pusheen\Relations\RelationsBll\bin\Debug\netcoreapp3.1\Relations.Bll.dll
+C:\Users\Pusheen\Relations\RelationsBll\bin\Debug\netcoreapp3.1\Relations.Bll.pdb
+C:\Users\Pusheen\Relations\RelationsBll\bin\Debug\netcoreapp3.1\Relations.Infrastructure.dll
+C:\Users\Pusheen\Relations\RelationsBll\bin\Debug\netcoreapp3.1\Relations.Infrastructure.pdb
+C:\Users\Pusheen\Relations\RelationsBll\obj\Debug\netcoreapp3.1\Relations.Bll.csprojAssemblyReference.cache
+C:\Users\Pusheen\Relations\RelationsBll\obj\Debug\netcoreapp3.1\Relations.Bll.csproj.CoreCompileInputs.cache
+C:\Users\Pusheen\Relations\RelationsBll\obj\Debug\netcoreapp3.1\Relations.Bll.AssemblyInfoInputs.cache
+C:\Users\Pusheen\Relations\RelationsBll\obj\Debug\netcoreapp3.1\Relations.Bll.AssemblyInfo.cs
+C:\Users\Pusheen\Relations\RelationsBll\obj\Debug\netcoreapp3.1\Relations.Bll.csproj.CopyComplete
+C:\Users\Pusheen\Relations\RelationsBll\obj\Debug\netcoreapp3.1\Relations.Bll.dll
+C:\Users\Pusheen\Relations\RelationsBll\obj\Debug\netcoreapp3.1\Relations.Bll.pdb
