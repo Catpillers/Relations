@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Relation.API.Models;
-using Relation.API.Services;
+using Relations.Dal.Interfaces;
 
-namespace Relation.API.Controllers
+namespace Relations.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -21,11 +15,16 @@ namespace Relation.API.Controllers
             _repo = repo;
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> GetRelations()
+        public async Task<IActionResult> Get()
         {
-            var relation = await _repo.GetAddressType();
+            var relation = await _repo.GetRelation();
             return Ok(relation);
+
         }
+
+
+
     }
 }

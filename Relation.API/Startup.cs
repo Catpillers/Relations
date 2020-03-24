@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Relation.API.Data;
-using Relation.API.Repository;
-using Relation.API.Services;
+using Relations.Dal.Data;
+using Relations.Dal.Interfaces;
+using Relations.Dal.Repository;
 
-namespace Relation.API
+namespace Relations.Api
 {
     public class Startup
     {
@@ -22,7 +22,7 @@ namespace Relation.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IRelationRepository, RelationsRepository>();
+            services.AddScoped<IRelationRepository, RelationRepository>();
             services.AddDbContext<DataContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
