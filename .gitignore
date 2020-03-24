@@ -1,7 +1,3 @@
-﻿Relation.API/.vs
-Relation.API/bin
-Relation.API/obj
-Relation-SPA/node_modules
 Relation-SPA/.editorconfig
 Relation.API/AppData/Relations_log.ldf
 Relation.API/AppData/Relationst.mdf
