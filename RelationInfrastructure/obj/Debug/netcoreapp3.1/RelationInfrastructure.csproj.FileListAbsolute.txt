@@ -1,9 +1,0 @@
-C:\Users\Pusheen\Relations\RelationInfrastructure\bin\Debug\netcoreapp3.1\RelationInfrastructure.deps.json
-C:\Users\Pusheen\Relations\RelationInfrastructure\bin\Debug\netcoreapp3.1\RelationInfrastructure.dll
-C:\Users\Pusheen\Relations\RelationInfrastructure\obj\Debug\netcoreapp3.1\RelationInfrastructure.csprojAssemblyReference.cache
-C:\Users\Pusheen\Relations\RelationInfrastructure\obj\Debug\netcoreapp3.1\RelationInfrastructure.AssemblyInfoInputs.cache
-C:\Users\Pusheen\Relations\RelationInfrastructure\obj\Debug\netcoreapp3.1\RelationInfrastructure.AssemblyInfo.cs
-C:\Users\Pusheen\Relations\RelationInfrastructure\bin\Debug\netcoreapp3.1\RelationInfrastructure.pdb
-C:\Users\Pusheen\Relations\RelationInfrastructure\obj\Debug\netcoreapp3.1\RelationInfrastructure.csproj.CoreCompileInputs.cache
-C:\Users\Pusheen\Relations\RelationInfrastructure\obj\Debug\netcoreapp3.1\RelationInfrastructure.dll
-C:\Users\Pusheen\Relations\RelationInfrastructure\obj\Debug\netcoreapp3.1\RelationInfrastructure.pdb
