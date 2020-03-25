@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Relations.Dal.Data;
@@ -19,11 +20,16 @@ namespace Relations.Dal.Repository
        
 
 
-        public async Task<IEnumerable<Relation>> GetRelation()
+        
+        public async Task<List<Relation>> GetRelation()
         {
-            var relation = await _context.Relations.ToListAsync();
+            var relation = await _context.Relations
+                .Include(_ => _.RelationAddresses)
+                .ThenInclude(_ =>_.Country)
+                .ToListAsync();
             return relation;
         }
     }
+    
 
 }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Relations.Api
+namespace Relations.API
 {
     public class Program
     {

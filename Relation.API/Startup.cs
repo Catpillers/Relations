@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,7 @@ using Relations.Dal.Data;
 using Relations.Dal.Interfaces;
 using Relations.Dal.Repository;
 
-namespace Relations.Api
+namespace Relations.API
 {
     public class Startup
     {
@@ -26,6 +27,7 @@ namespace Relations.Api
             services.AddDbContext<DataContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
                 builder

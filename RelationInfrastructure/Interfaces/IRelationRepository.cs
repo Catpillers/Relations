@@ -6,7 +6,7 @@ namespace Relations.Dal.Interfaces
 {
     public interface IRelationRepository
     {  
-        Task<IEnumerable<Relation>> GetRelation();
+        Task<List<Relation>> GetRelation();
        
 
         //void Create(T record);

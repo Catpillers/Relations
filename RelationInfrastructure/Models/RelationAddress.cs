@@ -17,7 +17,6 @@ namespace Relations.Dal.Models
         public string CountryName { get; set; }
         public double? Longitude { get; set; }
         public double? Latitude { get; set; }
-        public Guid Id { get; set; }
         public AddressType AddressType { get; set; }
         public Country Country { get; set; }
         public Relation Relation { get; set; }

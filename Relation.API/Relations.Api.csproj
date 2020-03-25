@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RelationInfrastructure\Relations.Dal.csproj" />
-    <ProjectReference Include="..\RelationsBll\Relations.Bll.csproj" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\" />
+    <ProjectReference Include="..\RelationInfrastructure\Relations.Dal.csproj" />
+    <ProjectReference Include="..\RelationsBll\Relations.Bll.csproj" />
   </ItemGroup>
 
 

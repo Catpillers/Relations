@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RelationService } from './relation.service';
+import { RelationService } from './_services/relation.service';
 
 
 @Component({
@@ -8,15 +8,9 @@ import { RelationService } from './relation.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Relation-SPA';
 
   constructor(private _relationService: RelationService) {
-   this._relationService.GetRelations().subscribe(_ => {
-       console.log(_);
-    },
-    error =>{
-      console.log(error);
-    });
+   
   }
 
 
