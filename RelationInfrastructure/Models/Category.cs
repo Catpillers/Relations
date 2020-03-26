@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace Relations.Dal.Models
 {
-    public class Category
+    public class Category : EntityWithId
     {
-        public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? ModifiedAt { get; set; }

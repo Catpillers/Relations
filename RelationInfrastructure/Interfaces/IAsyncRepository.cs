@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
+using Relations.Dal.Models;
 
 namespace Relations.Dal.Interfaces
 {
-    interface IGenericRepository<T> where T : class
+    public interface IAsyncRepository<T> where T : EntityWithId
     {
         Task<IEnumerable<T>> GetAll();
-        Task<T> GetById(int id);
+        Task<T> GetById(Guid id);
         Task Add(T entity);
-        Task Update(T entity);
         Task Remove(T entity);
+        Task<bool> SaveAll();
     }
 }

@@ -1,35 +1,22 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Relations.Dal.Data;
-using Relations.Dal.Interfaces;
 using Relations.Dal.Models;
 
 namespace Relations.Dal.Repository
 {
-    public class RelationRepository : IRelationRepository
+    public class RelationRepository : AsyncRepository<Relation>
     {
-        private protected DataContext _context;
+        public RelationRepository(DataContext context) : base(context){}
 
-        public RelationRepository(DataContext context)
+        public override async Task<IEnumerable<Relation>> GetAll()
         {
-            _context = context;
-        }
-
-       
-
-
-        
-        public async Task<List<Relation>> GetRelation()
-        {
-            var relation = await _context.Relations
+              return await _context.Set<Relation>()
+                .Include(_ => _.RelationCategories)
                 .Include(_ => _.RelationAddresses)
-                .ThenInclude(_ =>_.Country)
-                .ToListAsync();
-            return relation;
+                .ThenInclude(_ => _.Country).ToListAsync();
+
         }
     }
-    
-
 }
