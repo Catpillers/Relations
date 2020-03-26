@@ -5,8 +5,9 @@ namespace Relations.Dal.Data
 {
     public class DataContext : DbContext
     {
-        
-        public DataContext(DbContextOptions<DataContext> options) : base(options) {}
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
 
         public virtual DbSet<AddressType> AddressTypes { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
@@ -18,7 +19,6 @@ namespace Relations.Dal.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
             builder.Entity<AddressType>()
                 .HasMany(_ => _.RelationAddresses)
                 .WithOne(_ => _.AddressType)
@@ -48,8 +48,8 @@ namespace Relations.Dal.Data
             builder.Entity<RelationCategory>()
                 .HasKey(_ => new {_.CategoryId, _.RelationId});
 
+            builder.Entity<RelationAddress>()
+                .HasKey(_ => new {_.RelationId, _.AddressTypeId});
         }
-
-        
     }
 }

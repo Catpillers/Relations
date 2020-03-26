@@ -1,14 +1,18 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Relations.Bll.Interfaces;
+using Relations.Bll.Services;
 using Relations.Dal.Data;
 using Relations.Dal.Interfaces;
+using Relations.Dal.Models;
 using Relations.Dal.Repository;
 
-namespace Relations.Api
+namespace Relations.API
 {
     public class Startup
     {
@@ -22,14 +26,18 @@ namespace Relations.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IRelationRepository, RelationRepository>();
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
+            services.AddScoped<IAsyncRepository<Relation>, RelationRepository>();
+            services.AddScoped<IAsyncRepository<Category>, CategoryRepository>();
+            services.AddScoped<IRelationService, RelationService>();
             services.AddDbContext<DataContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
                 builder
-                    .WithOrigins(new[] { "http://localhost:4200" })
+                    .WithOrigins(new[] {"http://localhost:4200"})
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials();
@@ -56,12 +64,7 @@ namespace Relations.Api
 
             //app.UseCors(_ => _.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
-
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

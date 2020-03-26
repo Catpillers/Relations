@@ -5,3 +5,8 @@ RelationInfrastructure/obj
 RelationInfrastructure/bin
 RelationsBll/bin
 RelationsBll/obj
+Relation-SPA/node_modules
+Relation.API/.vs
+Relation.API/obj
+Relation.API/bin
+.vs
