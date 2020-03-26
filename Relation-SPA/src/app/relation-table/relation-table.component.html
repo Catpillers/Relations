@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-9">
       <button type="button" class="btn btn-info btn-lg" (click)="loadAllRelations()">
-        Load Data
+        Load All
       </button>
     </div>
     <div class="col-md-2">
@@ -11,13 +11,8 @@
           aria-controls="dropdown-animated">Select Category<span class="caret"></span>
         </button>
         <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
-          <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-          <li role="menuitem">
-            <a class="dropdown-item" href="#">Another action</a>
-          </li>
-          <li role="menuitem">
-            <a class="dropdown-item" href="#">Something else here</a>
-          </li>
+          <li role="menuitem" *ngFor="let cat of categories">
+            <a class="dropdown-item" role="button" (click)="sendCategoryId(cat.id)">{{ cat.name }}</a></li>
         </ul>
       </div>
     </div>
@@ -41,10 +36,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let rel of ralation">
+      <tr *ngFor="let rel of relations">
         <td>{{ rel.name }}</td>
         <td>{{ rel.fullName }}</td>
-        <td>{{ rel.emailAddress }}</td>
+        <td>{{ rel.emailAddress}}</td>
         <td>{{ rel.telephoneNumber }}</td>
         <td>{{ rel.countryName }}</td>
         <td>{{ rel.city }}</td>
@@ -62,6 +57,9 @@
       </tr>
     </tbody>
   </table>
+  <pagination [boundaryLinks]="true" [totalItems]="77"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+</pagination>
 </div>
 
 <!-- <div class="container-fluid cont-config">

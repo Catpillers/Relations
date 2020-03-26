@@ -27,7 +27,7 @@ namespace Relations.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
-            services.AddScoped<IAsyncRepository<Relation>, RelationRepository>();
+            services.AddScoped<IRelationRepository, RelationRepository>();
             services.AddScoped<IAsyncRepository<Category>, CategoryRepository>();
             services.AddScoped<IRelationService, RelationService>();
             services.AddDbContext<DataContext>(c =>

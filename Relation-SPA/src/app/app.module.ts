@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { RelationTableComponent } from './relation-table/relation-table.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 
@@ -19,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       HttpClientModule,
       BsDropdownModule.forRoot(),
       BrowserAnimationsModule,
+      PaginationModule.forRoot(),
 
    ],
    providers: [],

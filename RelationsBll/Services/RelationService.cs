@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Relations.Bll.Interfaces;
 using Relations.Dal.Interfaces;
 using Relations.Dal.Models;
@@ -11,18 +12,15 @@ namespace Relations.Bll.Services
 {
     public class RelationService : IRelationService
     {
-        private readonly IAsyncRepository<Relation> _repo;
-       
-        public RelationService(IAsyncRepository<Relation> repo)
-        {
-            _repo = repo;
-        }
-
-        public async Task<IEnumerable<Relation>> GetAll(Guid? id)
+        private readonly IRelationRepository _relations;
+        public RelationService( IRelationRepository relations)
         { 
-            var relations =  await _repo.GetAll();
-            return relations.AsQueryable().Where(_ => _.RelationCategories.FirstOrDefault().CategoryId == id);
+            _relations = relations;
         }
 
+        public async Task<IEnumerable<Relation>> GetAll(Guid? categoryId)
+        {
+            return await _relations.GetRelationsToList(categoryId);
+        }
     }
 }
