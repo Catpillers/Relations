@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Relation.API.Models;
+using Relations.API.ViewModels;
 using Relations.Bll.Interfaces;
+using Relations.Dal.Models;
 
-namespace Relation.API.Controllers
+namespace Relations.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -28,25 +29,12 @@ namespace Relation.API.Controllers
             return Ok(relationToReturn);
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetRelation(Guid id)
-        //{
-        //    var relations = await _service.GetById(id);
-        //    var relationsToReturn = _mapper.Map<RelationVm>(relations);
-        //    return Ok(relationsToReturn);
-        //}
-
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateRelation(Guid id, RelationVm relationVm)
-        //{
-        //    var relation = await _service.GetById(id);
-        //    _mapper.Map(relationVm, relation);
-        //    if (await _service.SaveAll())
-        //    {
-        //        return NoContent();
-        //    }
-
-        //    throw new Exception($"Updating user {id} failed on save");
-        //}
+        [HttpPost]
+        public async Task<IActionResult> AddRelations(AddRelationParams relationToAdd)
+        {
+          var relation =  _mapper.Map<Relation>(relationToAdd);
+          await _service.AddRelation(relation);
+          return Ok();
+        }
     }
 }

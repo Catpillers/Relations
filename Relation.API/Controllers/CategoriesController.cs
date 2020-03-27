@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Relation.API.Models;
+using Relations.API.ViewModels;
 using Relations.Dal.Interfaces;
 using Relations.Dal.Models;
 
-namespace Relation.API.Controllers
+namespace Relations.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Relation.API", "Relation.API\Relation.API.csproj", "{D3E7E124-5E6A-4548-9CB5-25E3CD246E9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Relations.API", "Relation.API\Relations.API.csproj", "{D3E7E124-5E6A-4548-9CB5-25E3CD246E9B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Relations.Dal", "RelationInfrastructure\Relations.Dal.csproj", "{4F21DC19-22E5-4CED-84C1-7CDBD75AD8C6}"
 EndProject

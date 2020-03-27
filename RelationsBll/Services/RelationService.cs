@@ -23,5 +23,10 @@ namespace Relations.Bll.Services
         {
             return await _relations.GetRelationList(categoryId);
         }
+
+        public async Task AddRelation(Relation relation)
+        {
+            await _relations.Add(relation);
+        }
     }
 }

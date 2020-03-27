@@ -9,5 +9,6 @@ namespace Relations.Bll.Interfaces
    public interface IRelationService 
    { 
         Task<IEnumerable<Relation>> GetList(Guid? categoryId);
-
-}  }
+        Task AddRelation(Relation relation);
+   }
+}

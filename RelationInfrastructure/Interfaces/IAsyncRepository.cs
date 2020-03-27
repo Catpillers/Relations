@@ -11,6 +11,5 @@ namespace Relations.Dal.Interfaces
         Task<T> GetById(Guid id);
         Task Add(T entity);
         Task Remove(T entity);
-        Task<bool> SaveAll();
     }
 }

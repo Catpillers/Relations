@@ -1,7 +1,11 @@
-﻿namespace Relation.API.Models
+﻿using System;
+
+namespace Relations.API.ViewModels
 {
-    public class RelationToAddVm
+    public class RelationVm
     {
+        public Guid Id { get; set; }
+        public Guid RelationCategoryId { get; set; }
         public string Name { get; set; }
         public string FullName { get; set; }
         public string EmailAddress { get; set; }

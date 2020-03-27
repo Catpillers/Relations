@@ -12,7 +12,7 @@ using Relations.Dal.Interfaces;
 using Relations.Dal.Models;
 using Relations.Dal.Repository;
 
-namespace Relation.API
+namespace Relations.API
 {
     public class Startup
     {
