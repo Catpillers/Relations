@@ -30,5 +30,6 @@ namespace Relations.Dal.Repository
                 .ThenInclude(_ => _.Country)
                 .Where(_ => _.RelationCategories.FirstOrDefault().CategoryId == categoryId).ToListAsync();
         }
+
     }
 }

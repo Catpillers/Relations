@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Relations.API.ViewModels;
 using Relations.Bll.Interfaces;
 using Relations.Dal.Interfaces;
 using Relations.Dal.Models;
@@ -24,8 +25,50 @@ namespace Relations.Bll.Services
             return await _relations.GetRelationList(categoryId);
         }
 
-        public async Task AddRelation(Relation relation)
+        public async Task AddRelation(AddRelationModel relationModel)
         {
+            Relation relation = new Relation
+            {
+                Name =  relationModel.Name,
+                FullName = relationModel.FullName,
+                EmailAddress = relationModel.EmailAddress,
+                TelephoneNumber = relationModel.TelephoneNumber,
+            };
+            
+            Country country = new Country
+            {
+                Name = relationModel.CountryName,
+                Id = relationModel.CountryId
+            };
+
+            relation.RelationAddresses = new List<RelationAddress>
+            {
+                new RelationAddress
+                {
+                    RelationId = relation.Id,
+                    City = relationModel.City,
+                    Street = relationModel.Street,
+                    Number = relationModel.Number,
+                    PostalCode = relationModel.PostalCode,
+                    AddressTypeId = Guid.Parse("00000000-0000-0000-0000-000000000001"),
+                    Country = country
+                }
+            };
+
+            Category category = new Category
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000005")
+            };
+
+            relation.RelationCategories = new List<RelationCategory>
+            {
+                new RelationCategory
+                {
+                    RelationId = relation.Id,
+                    CategoryId = category.Id
+                }
+            };
+
             await _relations.Add(relation);
         }
     }

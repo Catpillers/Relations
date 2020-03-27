@@ -16,7 +16,7 @@ namespace Relations.Dal.Repository
             _context = context;
         }
 
-        public async Task Add(T entity)
+        public virtual async Task Add(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();

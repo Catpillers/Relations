@@ -1,10 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Relations.API.ViewModels
 {
-    public class AddRelationParams
+    public class AddRelationModel
     {
-       
+        public Guid RelationAddressId { get; set; }
+        public List<Guid> RelationCategoryId { get; set; }
+        public Guid CountryId { get; set; }
         public string Name { get; set; }
         public string FullName { get; set; }
         public string EmailAddress { get; set; }

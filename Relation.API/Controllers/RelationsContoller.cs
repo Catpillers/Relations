@@ -4,7 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Relations.API.ViewModels;
 using Relations.Bll.Interfaces;
-using Relations.Dal.Models;
+
 
 namespace Relations.API.Controllers
 {
@@ -30,10 +30,10 @@ namespace Relations.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRelations(AddRelationParams relationToAdd)
+        public async Task<IActionResult> AddRelations(AddRelationModel relationToAdd)
         {
-          var relation =  _mapper.Map<Relation>(relationToAdd);
-          await _service.AddRelation(relation);
+          //var relation =  _mapper.Map<Relation>(relationToAdd);
+          await _service.AddRelation(relationToAdd);
           return Ok();
         }
     }

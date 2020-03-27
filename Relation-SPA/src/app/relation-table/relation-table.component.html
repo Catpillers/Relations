@@ -2,20 +2,106 @@
   <div class="row">
     <div class="col-md-11">
       <div class="btn-group" dropdown>
-        <button id="button-animated" dropdownToggle type="button" class="btn btn-info dropdown-toggle"
-          aria-controls="dropdown-animated">Select Category<span class="caret"></span>
+        <button
+          id="button-animated"
+          dropdownToggle
+          type="button"
+          class="btn btn-info dropdown-toggle"
+          aria-controls="dropdown-animated"
+        >
+          Select Category<span class="caret"></span>
         </button>
-        <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+        <ul
+          id="dropdown-animated"
+          *dropdownMenu
+          class="dropdown-menu"
+          role="menu"
+          aria-labelledby="button-animated"
+        >
           <li role="menuitem">
-            <a class="dropdown-item" role="button" (click)="loadAllRelations()">Load All</a>
-            <a class="dropdown-item" role="button" *ngFor="let cat of categories"
-              (click)="sendCategoryId(cat.id)">{{ cat.name }}</a>
+            <a class="dropdown-item" role="button" (click)="loadAllRelations()"
+              >Load All</a
+            >
+            <a
+              class="dropdown-item"
+              role="button"
+              *ngFor="let cat of categories"
+              (click)="sendCategoryId(cat.id)"
+              >{{ cat.name }}</a
+            >
           </li>
         </ul>
       </div>
     </div>
     <div class="col-md-1">
-      <button class="btn btn-success">Add+</button>
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="openModal(template)"
+      >
+        Add +
+      </button>
+      <ng-template #template>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">New Relation</h4>
+          <button
+            type="button"
+            class="close pull-right"
+            aria-label="Close"
+            (click)="modalRef.hide()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="name">Select Category</label>
+              <select class="form-control" id="name">
+                <option *ngFor="let category of categories">{{category.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="fullName">FullName</label>
+              <input type="text" id="fullName" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="emailAddress">Email</label>
+              <input type="email" id="emailAddress" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="telephoneNumber">Telephone Number</label>
+              <input type="text" id="telephoneNumber" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="countryName">Select Country</label>
+              <select class="form-control" id="countryName">
+                <option>1</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="street">Street</label>
+              <input type="text" id="street" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="number">Street Number</label>
+              <input type="text" id="number" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="postalCode">Postal Code</label>
+              <input type="text" id="postalCode" class="form-control" />
+            </div>
+          </form>
+        </div>
+      </ng-template>
     </div>
   </div>
   <table class="table table-bordered table-striped text-center">
@@ -37,7 +123,7 @@
       <tr *ngFor="let rel of relations">
         <td>{{ rel.name }}</td>
         <td>{{ rel.fullName }}</td>
-        <td>{{ rel.emailAddress}}</td>
+        <td>{{ rel.emailAddress }}</td>
         <td>{{ rel.telephoneNumber }}</td>
         <td>{{ rel.countryName }}</td>
         <td>{{ rel.city }}</td>
@@ -45,8 +131,69 @@
         <td>{{ rel.number }}</td>
         <td>{{ rel.postalCode }}</td>
         <td>
-          <button type="button" class="btn btn-warning">
+          <button type="button" class="btn btn-warning" (click)="openModal(template)">
             <i class="fa fa-edit"></i>
+            <ng-template #template>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left">Edit Relation</h4>
+                <button
+                  type="button"
+                  class="close pull-right"
+                  aria-label="Close"
+                  (click)="modalRef.hide()"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="name">Select Category</label>
+                    <select class="form-control" id="name">
+                      <option *ngFor="let category of categories">{{category.name}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label for="fullName">FullName</label>
+                    <input type="text" id="fullName" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label for="emailAddress">Email</label>
+                    <input type="email" id="emailAddress" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label for="telephoneNumber">Telephone Number</label>
+                    <input type="text" id="telephoneNumber" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label for="countryName">Select Country</label>
+                    <select class="form-control" id="countryName">
+                      <option>1</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label for="street">Street</label>
+                    <input type="text" id="street" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label for="number">Street Number</label>
+                    <input type="text" id="number" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label for="postalCode">Postal Code</label>
+                    <input type="text" id="postalCode" class="form-control" />
+                  </div>
+                </form>
+              </div>
+            </ng-template>
           </button>
           <button type="button" class="btn btn-danger">
             <i class="fa fa-trash"></i>
@@ -56,8 +203,14 @@
     </tbody>
   </table>
   <!-- Sample for ToDo - Pagination;  -->
-  <pagination [boundaryLinks]="true" [totalItems]="10" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-    lastText="&raquo;">
+  <pagination
+    [boundaryLinks]="true"
+    [totalItems]="10"
+    previousText="&lsaquo;"
+    nextText="&rsaquo;"
+    firstText="&laquo;"
+    lastText="&raquo;"
+  >
   </pagination>
   <!--  Sample for ToDo - Pagination;  -->
 </div>

@@ -18,7 +18,6 @@ namespace Relations.API.Mapper
                 .ForMember(_ => _.PostalCode, opt => opt.MapFrom(_ => _.RelationAddresses.FirstOrDefault().PostalCode));
 
             CreateMap<Category, CategoryVm>();
-            CreateMap<AddRelationParams, Relation>();
         }
     }
 }

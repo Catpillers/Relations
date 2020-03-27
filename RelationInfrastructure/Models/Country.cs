@@ -5,6 +5,13 @@ namespace Relations.Dal.Models
 {
     public class Country : EntityWithId
     {
+        public Country()
+        {
+            CreatedAt = DateTime.Now;
+            CreatedBy = "Evangelion";
+            IsDisabled = false;
+            IsDefault = false;
+        }
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? ModifiedAt { get; set; }
