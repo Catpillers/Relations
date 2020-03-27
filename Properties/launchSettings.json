@@ -1,0 +1,21 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/Relations.API",
+      "sslPort": 0
+    },
+    "iisExpress": {
+      "applicationUrl": "http://localhost:49719/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "Start": {
+      "commandName": "Project",
+      "ErrorString":
+        "Error reading JObject from JsonReader. Current JsonReader item is not an object: String. Path '', line 1, position 14."
+    }
+  }
+}

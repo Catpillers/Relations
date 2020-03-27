@@ -1,28 +1,21 @@
 <div class="container-fluid cont-config">
   <div class="row">
-    <div class="col-md-9">
-      <button type="button" class="btn btn-info btn-lg" (click)="loadAllRelations()">
-        Load Data
-      </button>
-    </div>
-    <div class="col-md-2">
+    <div class="col-md-11">
       <div class="btn-group" dropdown>
-        <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+        <button id="button-animated" dropdownToggle type="button" class="btn btn-info dropdown-toggle"
           aria-controls="dropdown-animated">Select Category<span class="caret"></span>
         </button>
         <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
-          <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
           <li role="menuitem">
-            <a class="dropdown-item" href="#">Another action</a>
-          </li>
-          <li role="menuitem">
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" role="button" (click)="loadAllRelations()">Load All</a>
+            <a class="dropdown-item" role="button" *ngFor="let cat of categories"
+              (click)="sendCategoryId(cat.id)">{{ cat.name }}</a>
           </li>
         </ul>
       </div>
     </div>
     <div class="col-md-1">
-      <button class="btn btn-primary">Add+</button>
+      <button class="btn btn-success">Add+</button>
     </div>
   </div>
   <table class="table table-bordered table-striped text-center">
@@ -41,10 +34,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let rel of ralation">
+      <tr *ngFor="let rel of relations">
         <td>{{ rel.name }}</td>
         <td>{{ rel.fullName }}</td>
-        <td>{{ rel.emailAddress }}</td>
+        <td>{{ rel.emailAddress}}</td>
         <td>{{ rel.telephoneNumber }}</td>
         <td>{{ rel.countryName }}</td>
         <td>{{ rel.city }}</td>
@@ -62,40 +55,9 @@
       </tr>
     </tbody>
   </table>
+  <!-- Sample for ToDo - Pagination;  -->
+  <pagination [boundaryLinks]="true" [totalItems]="10" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+    lastText="&raquo;">
+  </pagination>
+  <!--  Sample for ToDo - Pagination;  -->
 </div>
-
-<!-- <div class="container-fluid cont-config">
-  <table class="table table-bordered table-striped table-hover">
-    <thead class="header  thead-dark">
-      <tr>
-        <th class="text-center">
-          Name
-        </th>
-        <th class="text-center">
-          Country Code
-        </th>
-        <th class="text-center">
-          Capital
-        </th>
-        <th class="text-center">
-          Area (km2)
-        </th>
-        <th class="text-center">
-          Population
-        </th>
-        <th class="text-center">
-          Continent
-        </th>
-      </tr>
-    </thead>
-    <tbody class="searchable">
-      <tr> // ng for here!
-        <td>{{ "Name" }}</td>
-        <td>{{ "code" }}</td>
-        <td>{{ "capital" }}</td>
-        <td>{{ "Number" }}</td>
-        <td>{{ "dummy" }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div> -->

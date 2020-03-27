@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RelationService } from './_services/relation.service';
 
+import { RelationService } from './_services/relation.service';
 
 @Component({
   selector: 'app-root',
@@ -8,15 +8,5 @@ import { RelationService } from './_services/relation.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  constructor(private _relationService: RelationService) {
-   
-  }
-
-
-
-
-
-
-
+  constructor(private _relationService: RelationService) {}
 }
