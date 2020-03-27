@@ -8,6 +8,6 @@ namespace Relations.Bll.Interfaces
 { 
    public interface IRelationService 
    { 
-        Task<IEnumerable<Relation>> GetAll(Guid? categoryId);
+        Task<IEnumerable<Relation>> GetList(Guid? categoryId);
 
 }  }

@@ -1,14 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Relations.API.RelationsViewModels;
-using Relations.Dal.Interfaces;
-using Relations.Dal.Models;
+using Relation.API.Models;
 using Relations.Bll.Interfaces;
 
-namespace Relations.API.Controllers
+namespace Relation.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -26,7 +23,7 @@ namespace Relations.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRelations([FromQuery]RelationParams relationParams)
         {
-            var relations = await _service.GetAll(relationParams.CategoryId);
+            var relations = await _service.GetList(relationParams.CategoryId);
             var relationToReturn = _mapper.Map<IEnumerable<RelationVm>>(relations);
             return Ok(relationToReturn);
         }

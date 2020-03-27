@@ -13,14 +13,15 @@ namespace Relations.Bll.Services
     public class RelationService : IRelationService
     {
         private readonly IRelationRepository _relations;
+       
         public RelationService( IRelationRepository relations)
         { 
             _relations = relations;
         }
 
-        public async Task<IEnumerable<Relation>> GetAll(Guid? categoryId)
+        public async Task<IEnumerable<Relation>> GetList(Guid? categoryId)
         {
-            return await _relations.GetRelationsToList(categoryId);
+            return await _relations.GetRelationList(categoryId);
         }
     }
 }

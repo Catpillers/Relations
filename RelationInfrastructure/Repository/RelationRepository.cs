@@ -13,7 +13,7 @@ namespace Relations.Dal.Repository
     {
         public RelationRepository(DataContext context) : base(context){}
 
-        public async Task<IEnumerable<Relation>> GetRelationsToList(Guid? categoryId)
+        public async Task<IEnumerable<Relation>> GetRelationList(Guid? categoryId)
         {
             if (categoryId == null)
             {

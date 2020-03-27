@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { RelationService } from '../_services/relation.service';
+
 import { Relation } from '../_models/relation';
 import { Category } from '../_models/category';
 
@@ -12,15 +14,14 @@ export class RelationTableComponent implements OnInit {
   relations: Relation[];
   categoryList: any = [];
   categories: Category[];
-  constructor(private _relationService: RelationService) { }
+  constructor(private _relationService: RelationService) {}
 
   ngOnInit() {
     this._relationService.GetCategorys().subscribe(_ => {
       this.categoryList = _;
       this.categories = _;
-      console.log(this.categories);
-      console.log(this.categoryList);
     });
+
     this._relationService.GetRelations().subscribe(_ => {
       this.relations = _;
     });
@@ -37,5 +38,4 @@ export class RelationTableComponent implements OnInit {
       this.relations = _;
     });
   }
-
 }

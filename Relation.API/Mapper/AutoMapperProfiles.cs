@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using AutoMapper;
-using Relations.API.RelationsViewModels;
+using Relation.API.Models;
 using Relations.Dal.Models;
 
-namespace Relations.API.Mapper
+namespace Relation.API.Mapper
 {
     public class AutoMapperProfiles : Profile
     {
         public AutoMapperProfiles()
         {
-            CreateMap<Relation, RelationVm>()
+            CreateMap<Relations.Dal.Models.Relation, RelationVm>()
                 .ForMember(_ => _.CountryName, opt => opt.MapFrom(_ => _.RelationAddresses.FirstOrDefault().Country.Name))
                 .ForMember(_ => _.RelationCategoryId, opt => opt.MapFrom(_ => _.RelationCategories.FirstOrDefault().CategoryId))
                 .ForMember(_ => _.City, opt => opt.MapFrom(_ => _.RelationAddresses.FirstOrDefault().City))
