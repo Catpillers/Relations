@@ -27,7 +27,7 @@ namespace Relations.Bll.Services
 
         public async Task AddRelation(AddRelationModel relationModel)
         {
-            Relation relation = new Relation
+            var relation = new Relation
             {
                 Name =  relationModel.Name,
                 FullName = relationModel.FullName,
@@ -35,7 +35,7 @@ namespace Relations.Bll.Services
                 TelephoneNumber = relationModel.TelephoneNumber,
             };
             
-            Country country = new Country
+            var country = new Country
             {
                 Name = relationModel.CountryName,
                 Id = relationModel.CountryId
@@ -55,7 +55,7 @@ namespace Relations.Bll.Services
                 }
             };
 
-            Category category = new Category
+            var category = new Category
             {
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000005")
             };
@@ -68,7 +68,6 @@ namespace Relations.Bll.Services
                     CategoryId = category.Id
                 }
             };
-
             await _relations.Add(relation);
         }
     }

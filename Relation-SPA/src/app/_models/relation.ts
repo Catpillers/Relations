@@ -8,5 +8,5 @@ export interface Relation {
     city: string;
     street: string;
     number: number;
-    postalCode: number;
+    postalCode: string;
 }
