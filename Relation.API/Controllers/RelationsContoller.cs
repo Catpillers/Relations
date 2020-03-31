@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -24,17 +25,23 @@ namespace Relations.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRelations([FromQuery]RelationParams relationParams)
         {
-            var relations = await _service.GetList(relationParams.CategoryId);
+            var relations = await _service.GetRelationsList(relationParams.CategoryId);
             var relationToReturn = _mapper.Map<IEnumerable<RelationVm>>(relations);
             return Ok(relationToReturn);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddRelations(AddRelationModel relationToAdd)
+        { 
+            await _service.AddRelation(relationToAdd);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Disable(IEnumerable<Guid> ids)
         {
-          //var relation =  _mapper.Map<Relation>(relationToAdd);
-          await _service.AddRelation(relationToAdd);
-          return Ok();
+            await _service.DisableRelation(ids);
+            return NoContent();
         }
     }
 }

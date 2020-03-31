@@ -20,7 +20,7 @@ namespace Relations.Bll.Services
             _relations = relations;
         }
 
-        public async Task<IEnumerable<Relation>> GetList(Guid? categoryId)
+        public async Task<IEnumerable<Relation>> GetRelationsList(Guid? categoryId)
         {
             return await _relations.GetRelationList(categoryId);
         }
@@ -35,12 +35,6 @@ namespace Relations.Bll.Services
                 TelephoneNumber = relationModel.TelephoneNumber,
             };
             
-            var country = new Country
-            {
-                Name = relationModel.CountryName,
-                Id = relationModel.CountryId
-            };
-
             relation.RelationAddresses = new List<RelationAddress>
             {
                 new RelationAddress
@@ -51,13 +45,13 @@ namespace Relations.Bll.Services
                     Number = relationModel.Number,
                     PostalCode = relationModel.PostalCode,
                     AddressTypeId = Guid.Parse("00000000-0000-0000-0000-000000000001"),
-                    Country = country
+                    CountryId = relationModel.CountryId
                 }
             };
 
             var category = new Category
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000005")
+                Id = relationModel.RelationCategoryId
             };
 
             relation.RelationCategories = new List<RelationCategory>
@@ -69,6 +63,11 @@ namespace Relations.Bll.Services
                 }
             };
             await _relations.Add(relation);
+        }
+        
+        public async Task<IEnumerable<Relation>> DisableRelation(IEnumerable<Guid> relationIds)
+        {
+            return await _relations.UpdateRelations(relationIds);
         }
     }
 }

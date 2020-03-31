@@ -10,6 +10,6 @@ namespace Relations.Dal.Interfaces
         Task<IEnumerable<T>> GetAll();
         Task<T> GetById(Guid id);
         Task Add(T entity);
-        Task Remove(T entity);
+        Task Update(T entity);
     }
 }

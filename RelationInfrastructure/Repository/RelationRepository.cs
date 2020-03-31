@@ -20,7 +20,7 @@ namespace Relations.Dal.Repository
                 return await _context.Set<Relation>()
                     .Include(_ => _.RelationCategories)
                     .Include(_ => _.RelationAddresses)
-                    .ThenInclude(_ => _.Country)
+                    .ThenInclude(_ => _.Country).Where(_ => _.IsDisabled != true)
                     .ToListAsync();
             }
 
@@ -28,7 +28,19 @@ namespace Relations.Dal.Repository
                 .Include(_ => _.RelationCategories)
                 .Include(_ => _.RelationAddresses)
                 .ThenInclude(_ => _.Country)
-                .Where(_ => _.RelationCategories.FirstOrDefault().CategoryId == categoryId).ToListAsync();
+                .Where(_ => _.RelationCategories.FirstOrDefault().CategoryId == categoryId && _.IsDisabled != true).ToListAsync();
         }
+
+        public async Task<IEnumerable<Relation>> UpdateRelations(IEnumerable<Guid> ids)
+        {
+            var relationsToUpdate = await _context.Set<Relation>().Where(_ => ids.Contains(_.Id)).ToListAsync();
+            foreach (var relation in relationsToUpdate)
+            {
+                relation.IsDisabled = true;
+            }
+            await  _context.SaveChangesAsync();
+            return relationsToUpdate;
+        }
+        
     }
 }

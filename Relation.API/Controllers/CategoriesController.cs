@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Relations.API.ViewModels;
+using Relations.Bll.Interfaces;
+using Relations.Bll.Services;
 using Relations.Dal.Interfaces;
 using Relations.Dal.Models;
 
@@ -12,19 +14,19 @@ namespace Relations.API.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly IAsyncRepository<Category> _repo;
+        private readonly ICategoryService _service;
         private readonly IMapper _mapper;
 
-        public CategoriesController(IAsyncRepository<Category> repo, IMapper mapper)
+        public CategoriesController(ICategoryService service, IMapper mapper)
         {
-            _repo = repo;
+            _service = service;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCategory()
+        public async Task<IActionResult> GetCategories()
         {
-            var category = await _repo.GetAll();
+            var category = await _service.GetCategoriesList();
             var categoryToDisplay = _mapper.Map<IEnumerable<CategoryVm>>(category);
             return Ok(categoryToDisplay);
         }

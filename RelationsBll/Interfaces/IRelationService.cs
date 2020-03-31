@@ -9,7 +9,8 @@ namespace Relations.Bll.Interfaces
 { 
    public interface IRelationService 
    { 
-        Task<IEnumerable<Relation>> GetList(Guid? categoryId);
+        Task<IEnumerable<Relation>> GetRelationsList(Guid? categoryId);
         Task AddRelation(AddRelationModel model);
+        Task<IEnumerable<Relation>> DisableRelation(IEnumerable<Guid> relationId);
    }
 }
