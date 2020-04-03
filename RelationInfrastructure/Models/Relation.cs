@@ -1,10 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Relations.Dal.Models
 {
     public class Relation : EntityWithId
     {
+        public Relation()
+        {
+            Id = Guid.NewGuid();
+            CreatedAt = DateTime.Now;
+            CreatedBy = "Evangelion";
+            IsDisabled = false;
+            IsTemporary = false;
+            IsMe = false;
+        }
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? ModifiedAt { get; set; }

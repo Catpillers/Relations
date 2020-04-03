@@ -27,9 +27,12 @@ namespace Relations.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
-            services.AddScoped<IAsyncRepository<Relation>, RelationRepository>();
+            services.AddScoped<IRelationRepository, RelationRepository>();
             services.AddScoped<IAsyncRepository<Category>, CategoryRepository>();
+            services.AddScoped<IAsyncRepository<Country>, CountryRepository>();
             services.AddScoped<IRelationService, RelationService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICountryService, CountryService>();
             services.AddDbContext<DataContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Relations.API.RelationsViewModels
+namespace Relations.API.ViewModels
 {
     public class CategoryVm
     {
