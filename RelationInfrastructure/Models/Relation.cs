@@ -9,7 +9,7 @@ namespace Relations.Dal.Models
     {
         public Relation()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             CreatedAt = DateTime.Now;
             CreatedBy = "Evangelion";
             IsDisabled = false;
