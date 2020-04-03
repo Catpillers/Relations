@@ -9,8 +9,8 @@
         <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
           <li role="menuitem">
             <a class="dropdown-item" role="button" (click)="loadAllRelations()">Load All</a>
-            <a class="dropdown-item" role="button" *ngFor="let cat of categories"
-              (click)="sendCategoryId(cat.id)">{{ cat.name }}</a>
+            <a class="dropdown-item" role="button" *ngFor="let category of categories"
+              (click)="sendCategoryId(category.id)">{{ category.name }}</a>
           </li>
         </ul>
       </div>
@@ -120,19 +120,19 @@
                 <label for="postalCode">Postal Code</label>
                 <input type="text" id="postalCode" class="form-control" formControlName="postalCode" />
               </div>
-              <button class="btn btn-success" type="submit" [disabled]="addRelationForm.invalid">
+              <button class="btn btn-success" type="submit" (click)="modalRef.hide()" [disabled]="addRelationForm.invalid">
                 Submite
               </button>
             </form>
           </div>
         </ng-template>
-        <button class="btn btn-danger" type="button" (click)="disableRelations()">
+        <button class="btn btn-danger" type="button" [disabled]='relationsToDisable.length === 0' (click)="disableRelations()">
           Confirm Deletion
         </button>
-        <button class="btn btn-primary" type="button" (click)="discardSelected()">
+        <button class="btn btn-primary" type="button" [disabled]='relationsToDisable.length === 0' (click)="discardSelected()">
           Discard Last
         </button>
-        <button class="btn btn-warning" type="button" (click)="discardAll()">
+        <button class="btn btn-warning" type="button" [disabled]='relationsToDisable.length !== 2' (click)="discardAll()">
           Discard All
         </button>
       </div>
@@ -165,7 +165,7 @@
         <td>{{ relation.number }}</td>
         <td>{{ relation.postalCode }}</td>
         <td>
-          <button type="button" class="btn btn-warning" (click)="openModal(template)">
+          <button type="button" class="btn btn-warning" (click)="openModal2(template, relation, countries, categories)">
             <i class="fa fa-edit"></i>
             <ng-template #template>
               <div class="modal-header">
@@ -175,7 +175,102 @@
                 </button>
               </div>
               <div class="modal-body">
-                <!--To DO: modal-->
+                <form [formGroup]="editRelationForm" (ngSubmit)="submitEdit()">
+                  <div class="form-group">
+                    <label for="relationCategoryId">Select Category</label>
+                    <select class="form-control" id="relationCategoryId" formControlName="relationCategoryId">
+                      <option *ngFor="let category of categories" value="{{ category.id }}">{{ category.name }}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" class="form-control" value="{{relation.name}}" formControlName="name" />
+                    <span class="help-block" *ngIf="
+                        editRelationForm.get('name').invalid &&
+                        editRelationForm.get('name').touched
+                      ">Please enter valid Name</span>
+                    <span class="help-block" *ngIf="editRelationForm.get('name').errors?.pattern">The Name should be 2 to 11
+                      characters long, must contain only
+                      letters</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="fullName">FullName</label>
+                    <input type="text" id="fullName" class="form-control" value="{{relation.fullName}}" formControlName="fullName" />
+                    <span class="help-block" *ngIf="
+                        editRelationForm.get('fullName').invalid &&
+                        editRelationForm.get('fullName').touched
+                      ">Please enter valid FullName</span>
+                    <span class="help-block" *ngIf="editRelationForm.get('fullName').errors?.pattern">The FullName should be
+                      2 to 15 characters long, must contain
+                      only letters</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="emailAddress">Email</label>
+                    <input type="email" id="emailAddress" class="form-control" value="{{relation.emailAddress}}" formControlName="emailAddress" />
+                    <span class="help-block" *ngIf="
+                        editRelationForm.get('emailAddress').invalid &&
+                        editRelationForm.get('emailAddress').touched
+                      ">Please enter valid email</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="telephoneNumber">Telephone Number</label>
+                    <input type="text" id="telephoneNumber" class="form-control" value="{{relation.telephoneNumber}}" formControlName="telephoneNumber" />
+                    <span class="help-block" *ngIf="
+                        editRelationForm.get('telephoneNumber').invalid &&
+                        editRelationForm.get('telephoneNumber').touched
+                      ">Please enter valid Telephone Number</span>
+                    <span class="help-block" *ngIf="editRelationForm.get('telephoneNumber').errors?.pattern">
+                      Telephone Number should be 12 characters long, must contain
+                      only numbers
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label for="countryId">Select Country</label>
+                    <select class="form-control" id="countryId" formControlName="countryId">
+                      <option *ngFor="let countrie of countries" value="{{ countrie.id }}">{{ countrie.name }}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" class="form-control" value="{{relation.city}}" formControlName="city" />
+                    <span class="help-block" *ngIf="
+                    editRelationForm.get('city').invalid &&
+                    editRelationForm.get('city').touched
+                      ">Please enter valid City</span>
+                    <span class="help-block" *ngIf="editRelationForm.get('city').errors?.pattern">
+                      City should be 2 characters long, must contain only letters
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label for="street">Street</label>
+                    <input type="text" id="street" class="form-control" value="{{relation.street}}" formControlName="street" />
+                    <span class="help-block" *ngIf="
+                    editRelationForm.get('street').invalid &&
+                    editRelationForm.get('street').touched
+                      ">Please enter valid Street</span>
+                    <span class="help-block" *ngIf="editRelationForm.get('street').errors?.pattern">
+                      Street should be 2 characters long, must contain only letters
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label for="number">Street Number</label>
+                    <input type="number" id="number" class="form-control" value="{{relation.number}}" formControlName="number" min="0" />
+                    <span class="help-block" *ngIf="
+                    editRelationForm.get('number').invalid &&
+                    editRelationForm.get('number').touched
+                      ">Please enter valid Street</span>
+                    <span class="help-block" *ngIf="editRelationForm.get('number').errors?.pattern">
+                      Street Number should be 2 characters long
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label for="postalCode">Postal Code</label>
+                    <input type="text" id="postalCode" class="form-control" value="{{relation.postalCode}}" formControlName="postalCode" />
+                  </div>
+                  <button class="btn btn-success" type="submit" (click)="modalRef.hide()" [disabled]="editRelationForm.invalid">
+                    Submite
+                  </button>
+                </form>
               </div>
             </ng-template>
           </button>
@@ -188,7 +283,7 @@
     </tbody>
   </table>
   <!-- Sample for ToDo - Pagination;  -->
-  <pagination [boundaryLinks]="true" [totalItems]="10" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+  <pagination [boundaryLinks]="true" [totalItems]="totalItems" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
     lastText="&raquo;">
   </pagination>
   <!--  Sample for ToDo - Pagination;  -->

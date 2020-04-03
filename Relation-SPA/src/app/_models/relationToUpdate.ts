@@ -1,12 +1,11 @@
-export interface Relation {
+export interface RelationToUpdate {
     id: number;
-    relationCategoryId: number;
-    countryId: number;
+    relationCategoryId: string;
+    countryId: string;
     name: string;
     fullName: string;
     telephoneNumber: number;
     emailAddress: string;
-    countryName: string;
     city: string;
     street: string;
     number: number;
