@@ -12,7 +12,7 @@ using Relations.Dal.Interfaces;
 using Relations.Dal.Models;
 using Relations.Dal.Repository;
 
-namespace Relation.API
+namespace Relations.API
 {
     public class Startup
     {
@@ -29,7 +29,10 @@ namespace Relation.API
             services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
             services.AddScoped<IRelationRepository, RelationRepository>();
             services.AddScoped<IAsyncRepository<Category>, CategoryRepository>();
+            services.AddScoped<IAsyncRepository<Country>, CountryRepository>();
             services.AddScoped<IRelationService, RelationService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICountryService, CountryService>();
             services.AddDbContext<DataContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();

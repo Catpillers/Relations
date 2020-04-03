@@ -1,12 +1,20 @@
 .cont-config {
- max-width: 1560px;
- margin-top: 100px;
+  max-width: 1600px;
+  margin-top: 100px;
 }
-.btn{
-    margin-bottom: 5px;
-    margin-right: 3px;
+.btn {
+  margin-bottom: 5px;
+  margin-right: 3px;
 }
-.form-check-label{
-    margin-right: 5px;
+.form-check-label {
+  margin-right: 5px;
 }
-
+input.ng-invalid.ng-touched {
+  border: solid 1px red;
+}
+input.ng-valid.ng-touched {
+  border: solid 1px rgb(26, 216, 26);
+}
+.side-bar {
+ margin-left: 100px;
+} 

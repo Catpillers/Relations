@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace Relation.API.Models
+namespace Relations.API.ViewModels
 {
     public class RelationVm
     {

@@ -5,9 +5,11 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { RelationTableComponent } from './relation-table/relation-table.component';
+
 
 @NgModule({
   declarations: [AppComponent, RelationTableComponent],
@@ -17,7 +19,8 @@ import { RelationTableComponent } from './relation-table/relation-table.componen
     BsDropdownModule.forRoot(),
     BrowserAnimationsModule,
     PaginationModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

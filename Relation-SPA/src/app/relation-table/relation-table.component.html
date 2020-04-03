@@ -1,9 +1,10 @@
 <div class="container-fluid cont-config">
   <div class="row">
-    <div class="col-md-11">
+    <div class="col-md-8">
       <div class="btn-group" dropdown>
         <button id="button-animated" dropdownToggle type="button" class="btn btn-info dropdown-toggle"
-          aria-controls="dropdown-animated">Select Category<span class="caret"></span>
+          aria-controls="dropdown-animated">
+          Select Category<span class="caret"></span>
         </button>
         <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
           <li role="menuitem">
@@ -14,8 +15,127 @@
         </ul>
       </div>
     </div>
-    <div class="col-md-1">
-      <button class="btn btn-success">Add+</button>
+    <div class="col-md-4">
+      <div class="row justify-content-end side-bar">
+        <button type="button" class="btn btn-success" (click)="openModal(template)">
+          Add +
+        </button>
+        <ng-template #template>
+          <div class="modal-header">
+            <h4 class="modal-title pull-left">New Relation</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="addRelationForm" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <label for="relationCategoryId">Select Category</label>
+                <select class="form-control" id="relationCategoryId" formControlName="relationCategoryId">
+                  <option *ngFor="let category of categories" value="{{ category.id }}">{{ category.name }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" class="form-control" formControlName="name" />
+                <span class="help-block" *ngIf="
+                    addRelationForm.get('name').invalid &&
+                    addRelationForm.get('name').touched
+                  ">Please enter valid Name</span>
+                <span class="help-block" *ngIf="addRelationForm.get('name').errors?.pattern">The Name should be 2 to 11
+                  characters long, must contain only
+                  letters</span>
+              </div>
+              <div class="form-group">
+                <label for="fullName">FullName</label>
+                <input type="text" id="fullName" class="form-control" formControlName="fullName" />
+                <span class="help-block" *ngIf="
+                    addRelationForm.get('fullName').invalid &&
+                    addRelationForm.get('fullName').touched
+                  ">Please enter valid FullName</span>
+                <span class="help-block" *ngIf="addRelationForm.get('fullName').errors?.pattern">The FullName should be
+                  2 to 15 characters long, must contain
+                  only letters</span>
+              </div>
+              <div class="form-group">
+                <label for="emailAddress">Email</label>
+                <input type="email" id="emailAddress" class="form-control" formControlName="emailAddress" />
+                <span class="help-block" *ngIf="
+                    addRelationForm.get('emailAddress').invalid &&
+                    addRelationForm.get('emailAddress').touched
+                  ">Please enter valid email</span>
+              </div>
+              <div class="form-group">
+                <label for="telephoneNumber">Telephone Number</label>
+                <input type="text" id="telephoneNumber" class="form-control" formControlName="telephoneNumber" />
+                <span class="help-block" *ngIf="
+                    addRelationForm.get('telephoneNumber').invalid &&
+                    addRelationForm.get('telephoneNumber').touched
+                  ">Please enter valid Telephone Number</span>
+                <span class="help-block" *ngIf="addRelationForm.get('telephoneNumber').errors?.pattern">
+                  Telephone Number should be 12 characters long, must contain
+                  only numbers
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="countryId">Select Country</label>
+                <select class="form-control" id="countryId" formControlName="countryId">
+                  <option *ngFor="let countrie of countries" value="{{ countrie.id }}">{{ countrie.name }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" class="form-control" formControlName="city" />
+                <span class="help-block" *ngIf="
+                    addRelationForm.get('city').invalid &&
+                    addRelationForm.get('city').touched
+                  ">Please enter valid City</span>
+                <span class="help-block" *ngIf="addRelationForm.get('city').errors?.pattern">
+                  City should be 2 characters long, must contain only letters
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="street">Street</label>
+                <input type="text" id="street" class="form-control" formControlName="street" />
+                <span class="help-block" *ngIf="
+                    addRelationForm.get('street').invalid &&
+                    addRelationForm.get('street').touched
+                  ">Please enter valid Street</span>
+                <span class="help-block" *ngIf="addRelationForm.get('street').errors?.pattern">
+                  Street should be 2 characters long, must contain only letters
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="number">Street Number</label>
+                <input type="number" id="number" class="form-control" formControlName="number" min="0" />
+                <span class="help-block" *ngIf="
+                    addRelationForm.get('number').invalid &&
+                    addRelationForm.get('number').touched
+                  ">Please enter valid Street</span>
+                <span class="help-block" *ngIf="addRelationForm.get('number').errors?.pattern">
+                  Street Number should be 2 characters long
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="postalCode">Postal Code</label>
+                <input type="text" id="postalCode" class="form-control" formControlName="postalCode" />
+              </div>
+              <button class="btn btn-success" type="submit" [disabled]="addRelationForm.invalid">
+                Submite
+              </button>
+            </form>
+          </div>
+        </ng-template>
+        <button class="btn btn-danger" type="button" (click)="disableRelations()">
+          Confirm Deletion
+        </button>
+        <button class="btn btn-primary" type="button" (click)="discardSelected()">
+          Discard Last
+        </button>
+        <button class="btn btn-warning" type="button" (click)="discardAll()">
+          Discard All
+        </button>
+      </div>
     </div>
   </div>
   <table class="table table-bordered table-striped text-center">
@@ -34,21 +154,33 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let rel of relations">
-        <td>{{ rel.name }}</td>
-        <td>{{ rel.fullName }}</td>
-        <td>{{ rel.emailAddress}}</td>
-        <td>{{ rel.telephoneNumber }}</td>
-        <td>{{ rel.countryName }}</td>
-        <td>{{ rel.city }}</td>
-        <td>{{ rel.street }}</td>
-        <td>{{ rel.number }}</td>
-        <td>{{ rel.postalCode }}</td>
+      <tr *ngFor="let relation of relations">
+        <td>{{ relation.name }}</td>
+        <td>{{ relation.fullName }}</td>
+        <td>{{ relation.emailAddress }}</td>
+        <td>{{ relation.telephoneNumber }}</td>
+        <td>{{ relation.countryName }}</td>
+        <td>{{ relation.city }}</td>
+        <td>{{ relation.street }}</td>
+        <td>{{ relation.number }}</td>
+        <td>{{ relation.postalCode }}</td>
         <td>
-          <button type="button" class="btn btn-warning">
+          <button type="button" class="btn btn-warning" (click)="openModal(template)">
             <i class="fa fa-edit"></i>
+            <ng-template #template>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left">Edit Relation</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <!--To DO: modal-->
+              </div>
+            </ng-template>
           </button>
-          <button type="button" class="btn btn-danger">
+          <button type="button" class="btn btn-danger" [disabled]="disableButton(relation.id)"
+            (click)="addRelationId(relation.id)">
             <i class="fa fa-trash"></i>
           </button>
         </td>

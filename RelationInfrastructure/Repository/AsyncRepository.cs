@@ -16,10 +16,11 @@ namespace Relations.Dal.Repository
             _context = context;
         }
 
-        public async Task Add(T entity)
+        public virtual async Task Add(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();
+            
         }
 
         public virtual async Task<IEnumerable<T>> GetAll()
@@ -32,15 +33,10 @@ namespace Relations.Dal.Repository
             return _context.Set<T>().FindAsync(id);
         }
 
-        public Task Remove(T entity)
+        public Task Update(T entity)
         {
-            _context.Set<T>().Remove(entity);
+            _context.Entry(entity).State = EntityState.Modified;
             return _context.SaveChangesAsync();
-        }
-
-        public async Task<bool> SaveAll()
-        {
-            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

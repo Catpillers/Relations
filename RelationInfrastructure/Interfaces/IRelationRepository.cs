@@ -8,5 +8,6 @@ namespace Relations.Dal.Interfaces
     public interface IRelationRepository : IAsyncRepository<Relation>
     {
         Task<IEnumerable<Relation>> GetRelationList(Guid? categoryId);
+        Task<IEnumerable<Relation>> UpdateRelations(IEnumerable<Guid> ids);
     }
 }
