@@ -21,7 +21,7 @@ namespace Relations.Bll.Services
             _relations = relations;
         }
 
-        public async Task<PaginatedList<Relation>> GetRelationsList(Guid? categoryId, int? pageNumber, string sortField, string sortOrder)
+        public async Task<PaginatedList<RelationVm>> GetRelationsList(Guid? categoryId, int? pageNumber, string sortField, string sortOrder)
         {
             return await _relations.GetRelationList(categoryId, pageNumber, sortField, sortOrder);
         }

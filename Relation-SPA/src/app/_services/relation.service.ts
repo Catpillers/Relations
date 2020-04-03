@@ -17,11 +17,18 @@ export class RelationService {
   baseUrl = environment.apiUrl;
   constructor(private _httpClient: HttpClient) { }
 
-  public GetRelations(id?: string): Observable<GetRelationResponse> {
+  public GetRelations(id?: string, sortField?: string, sortOrder?: string): Observable<GetRelationResponse> {
     let params = new HttpParams();
     if (id != null) {
       params = params.append('categoryId', id);
     }
+    if (sortField != null) {
+      params = params.append('sortField', sortField);
+    }
+    if (sortOrder != null) {
+      params = params.append('sortOrder',  sortOrder);
+    }
+
     return this._httpClient.get<GetRelationResponse>(this.baseUrl + 'Relations', { params });
   }
 
