@@ -17,7 +17,7 @@ namespace Relations.Dal.Repository
     {
         public RelationRepository(DataContext context) : base(context){}
 
-        public async Task<PaginatedList<Relation>> GetRelationList(Guid? categoryId, int? pageNumber, string sortField, string sortOrder)
+        public async Task<PaginatedList<RelationVm>> GetRelationList(Guid? categoryId, int? pageNumber, string sortField, string sortOrder)
         {
             int pageSize = 5;
             if (string.IsNullOrWhiteSpace(sortField))
@@ -30,34 +30,28 @@ namespace Relations.Dal.Repository
             }
 
             var relationsQuery = _context.Set<Relation>()
-                .Include(_ => _.RelationCategories)
-                .Include(_ => _.RelationAddresses)
-                .ThenInclude(_ => _.Country)
-                .Where(_ => _.IsDisabled != true).OrderByDynamic(sortField, sortOrder.ToUpper());
-
-            //var relationVm = new RelationVm()
-            //{
-            //    Id = relationsQuery.Single().Id,
-            //    RelationCategoryId = relationsQuery.Single().RelationCategories.First().CategoryId,
-            //    CountryId = relationsQuery.Single().RelationAddresses.First().CountryId,
-            //    Name = relationsQuery.Single().Name,
-            //    FullName = relationsQuery.Single().FullName,
-            //    EmailAddress = relationsQuery.Single().EmailAddress,
-            //    TelephoneNumber = relationsQuery.Single().TelephoneNumber,
-            //    CountryName = relationsQuery.Single().RelationAddresses.First().CountryName,
-            //    City = relationsQuery.Single().RelationAddresses.First().City,
-            //    Street = relationsQuery.Single().RelationAddresses.First().Street,
-            //    Number = relationsQuery.Single().RelationAddresses.First().Number,
-            //    PostalCode = relationsQuery.Single().RelationAddresses.First().PostalCode
-            //};
+                .Where(_ => _.IsDisabled != true)
+                .Select(_ => new RelationVm
+                {   Id= _.Id,
+                    RelationCategoryId = _.RelationCategories.Single().CategoryId,
+                    CountryId = _.RelationAddresses.First().CountryId,
+                    Name = _.Name,
+                    FullName = _.FullName,
+                    EmailAddress = _.EmailAddress,
+                    TelephoneNumber = _.TelephoneNumber,
+                    CountryName = _.RelationAddresses.First().Country.Name,
+                    City = _.RelationAddresses.First().City,
+                    Street = _.RelationAddresses.First().Street,
+                    Number = _.RelationAddresses.First().Number,
+                    PostalCode = _.RelationAddresses.First().PostalCode
+                }).OrderByDynamic(sortField, sortOrder.ToUpper());
 
             if (categoryId == null)
             {
-                return await PaginatedList<Relation>.CreateAsync(relationsQuery, pageNumber ?? 1, pageSize);
+                return await PaginatedList<RelationVm>.CreateAsync(relationsQuery, pageNumber ?? 1, pageSize);
             }
-
-            return await PaginatedList<Relation>.CreateAsync(relationsQuery
-                    .Where(_ => _.RelationCategories.FirstOrDefault().CategoryId == categoryId), pageNumber ?? 1, pageSize);
+            //.Where(_ => _.RelationCategories.FirstOrDefault().CategoryId == categoryId), pageNumber ?? 1, pageSize);
+            return await PaginatedList<RelationVm>.CreateAsync(relationsQuery.Where(_ => _.RelationCategoryId == categoryId), pageNumber ?? 1, pageSize);
         }
 
         public async Task AddRelation(AddRelationModel relationModel)

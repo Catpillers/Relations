@@ -9,8 +9,13 @@ import { Category } from '../_models/category';
 import { Country } from '../_models/country';
 import { __values } from 'tslib';
 import { RelationToUpdate } from '../_models/relationToUpdate';
+import { of } from 'rxjs';
 
 
+enum SortDirection {
+  Ascending = 'asc',
+  Descending = 'dsc',
+}
 
 @Component({
   selector: 'app-relation-table',
@@ -27,8 +32,17 @@ export class RelationTableComponent implements OnInit {
   relation: Relation;
   totalItems: number;
   relationsToDisable: number[] = [];
-  clicked = false;
-
+  sorting = {
+    fieldName: 'Name',
+    direction: 'asc',
+  }
+  tableHeaders = [
+    'Name', 'FullName',
+    'EmailAddress', 'TelephoneNumber',
+    'CountryName', 'City ', 'Street', 'Number', 'PostalCode',
+    'Actions'
+  ];
+  
   constructor(private _relationService: RelationService, private _modalService: BsModalService) { }
 
   ngOnInit() {
@@ -180,4 +194,22 @@ export class RelationTableComponent implements OnInit {
   discardAll() {
     this.relationsToDisable.length = 0;
   }
+
+  sort(sortName: string, dir: string) {
+    if (this.sorting.fieldName !== sortName) {
+      this.sorting = {
+        fieldName: sortName,
+        direction: dir
+      };
+    } else {
+      this.sorting.direction = this.sorting.direction === SortDirection.Ascending
+        ? SortDirection.Descending
+        : SortDirection.Ascending;
+    }
+    this._relationService.GetRelations(null, this.sorting.fieldName, this.sorting.direction)
+      .subscribe(_ => {
+        this.relations = _.items;
+      });
+  }
+
 }
