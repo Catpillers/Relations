@@ -3,14 +3,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { RelationService } from '../_services/relation.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { __values } from 'tslib';
 
 import { Relation } from '../_models/relation';
 import { Category } from '../_models/category';
 import { Country } from '../_models/country';
-import { __values } from 'tslib';
-import { RelationToUpdate } from '../_models/relationToUpdate';
-import { of } from 'rxjs';
-
 
 enum SortDirection {
   Ascending = 'asc',
@@ -26,35 +23,38 @@ export class RelationTableComponent implements OnInit {
   relations: Relation[];
   categories: Category[];
   countries: Country[];
+  relationsToDisable: number[] = [];
   addRelationForm: FormGroup;
   editRelationForm: FormGroup;
-  modalRef: BsModalRef;
-  relation: Relation;
   totalItems: number;
-  relationsToDisable: number[] = [];
+  currentCategory: string;
+  currentPage: string = '1';
+  currentDirection: string;
+  categoryToDisplay: string;
+  modalRef: BsModalRef;
   sorting = {
     fieldName: 'Name',
-    direction: 'asc',
-  }
+    direction: undefined
+  };
   tableHeaders = [
     'Name', 'FullName',
     'EmailAddress', 'TelephoneNumber',
-    'CountryName', 'City ', 'Street', 'Number', 'PostalCode',
-    'Actions'
-  ];
-  
+    'CountryName', 'City', 'Street', 'Number', 'PostalCode'];
+
+
   constructor(private _relationService: RelationService, private _modalService: BsModalService) { }
 
   ngOnInit() {
     this._relationService.GetCategorys().subscribe(categories => {
       this.categories = categories;
     });
-
     this._relationService.GetRelations().subscribe(relations => {
       this.relations = relations.items;
       this.totalItems = relations.totalCount;
+      this.categoryToDisplay = '';
+      this.sorting.direction = '';
+      this.sorting.fieldName = 'Name';
     });
-
     this._relationService.GetCounties().subscribe(countries => {
       this.countries = countries;
     });
@@ -118,24 +118,31 @@ export class RelationTableComponent implements OnInit {
     });
   }
 
-
   loadAllRelations() {
+    this.currentCategory = null;
     this._relationService.GetRelations().subscribe(_ => {
       this.relations = _.items;
+      this.totalItems = _.totalCount;
+      this.categoryToDisplay = '';
     });
   }
 
-  sendCategoryId(id: string) {
-    this._relationService.GetRelations(id).subscribe(_ => {
+  sendCategoryId(id: string, name: string) {
+    console.log(this.categoryToDisplay);
+    this.currentCategory = id;
+    this.categoryToDisplay = name;
+    console.log(this.categoryToDisplay);
+    this._relationService.GetRelations(this.currentCategory, this.currentPage, null, null).subscribe(_ => {
       this.relations = _.items;
+      this.totalItems = _.totalCount;
     });
   }
 
-  openModal(template: TemplateRef<any>) {
+  addRelationModal(template: TemplateRef<any>) {
     this.modalRef = this._modalService.show(template);
   }
 
-  openModal2(template: TemplateRef<any>, relation: Relation) {
+  editRelationModal(template: TemplateRef<any>, relation: Relation) {
     this.modalRef = this._modalService.show(template);
     const relationToUpdate = {
       id: relation.id,
@@ -153,30 +160,68 @@ export class RelationTableComponent implements OnInit {
     this.editRelationForm.setValue(relationToUpdate);
   }
 
-
-  onSubmit() {
+  addRelationSubmit() {
     this._relationService.AddRelation(this.addRelationForm.value).subscribe(() => {
-      this.loadAllRelations();
+      this._relationService.GetRelations(this.currentCategory, this.currentPage).subscribe(_ => {
+        this.relations = _.items;
+        this.totalItems = _.totalCount;
+      });
       this.addRelationForm.reset();
     });
 
   }
 
-  submitEdit() {
+  editRelationSubmit() {
     this._relationService.UpdateRelation(this.editRelationForm.value).subscribe(() => {
-      this.loadAllRelations();
+      if (this.currentCategory === null) {
+        this._relationService.GetRelations(null, this.currentPage, null, null)
+          .subscribe(_ => {
+            this.relations = _.items;
+
+          });
+      }
+      this._relationService.GetRelations(this.currentCategory, this.currentPage).subscribe(_ => {
+        this.relations = _.items;
+        this.totalItems = _.totalCount;
+      });
       this.editRelationForm.reset();
     });
   }
 
   addRelationId(value: number) {
-    console.log(value);
     this.relationsToDisable.push(value);
+  }
+
+  sort(sortName: string) {
+    if (this.sorting.fieldName !== sortName) {
+      this.sorting = {
+        fieldName: sortName,
+        direction: 'asc'
+      };
+      this.currentDirection = this.sorting.direction;
+    } else {
+      this.sorting.direction = this.sorting.direction === SortDirection.Ascending
+        ? SortDirection.Descending
+        : SortDirection.Ascending;
+      this.currentDirection = this.sorting.direction;
+    }
+    this._relationService.GetRelations(this.currentCategory, this.currentPage, this.sorting.fieldName, this.currentDirection)
+      .subscribe(_ => {
+        this.relations = _.items;
+      });
+  }
+
+  getSelectedCategoryNameOrDefault(): string {
+    return this.categoryToDisplay ? this.categoryToDisplay : 'Select Category';
   }
 
   disableRelations() {
     this._relationService.DisableRelations(this.relationsToDisable).subscribe(() => {
-      this.loadAllRelations();
+      this._relationService.GetRelations(this.currentCategory, this.currentPage).subscribe(_ => {
+        this.relations = _.items;
+        this.totalItems = _.totalCount;
+        this.relationsToDisable = [];
+      });
     });
   }
 
@@ -195,18 +240,9 @@ export class RelationTableComponent implements OnInit {
     this.relationsToDisable.length = 0;
   }
 
-  sort(sortName: string, dir: string) {
-    if (this.sorting.fieldName !== sortName) {
-      this.sorting = {
-        fieldName: sortName,
-        direction: dir
-      };
-    } else {
-      this.sorting.direction = this.sorting.direction === SortDirection.Ascending
-        ? SortDirection.Descending
-        : SortDirection.Ascending;
-    }
-    this._relationService.GetRelations(null, this.sorting.fieldName, this.sorting.direction)
+  pageChanged(pageNumber: any) {
+    this.currentPage = pageNumber.page;
+    this._relationService.GetRelations(this.currentCategory, this.currentPage, this.sorting.fieldName, this.currentDirection)
       .subscribe(_ => {
         this.relations = _.items;
       });

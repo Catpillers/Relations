@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Reflection;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using Relations.API.Options;
 using Relations.Bll.Interfaces;
 using Relations.Bll.Services;
 using Relations.Dal.Data;
@@ -28,6 +33,7 @@ namespace Relations.API
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
             services.AddScoped<IRelationRepository, RelationRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<IAsyncRepository<Category>, CategoryRepository>();
             services.AddScoped<IAsyncRepository<Country>, CountryRepository>();
             services.AddScoped<IRelationService, RelationService>();
@@ -35,6 +41,14 @@ namespace Relations.API
             services.AddScoped<ICountryService, CountryService>();
             services.AddDbContext<DataContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddSwaggerGen(_ =>
+            {
+                _.SwaggerDoc("v1", new OpenApiInfo {Title = "Relations Api", Version = "v1"});
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                _.IncludeXmlComments(xmlPath);
+            });
+
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
@@ -55,17 +69,20 @@ namespace Relations.API
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            //
+            
+            var swaggerOptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
+            app.UseSwagger(option => { option.RouteTemplate = swaggerOptions.JsonRoute; });
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint(swaggerOptions.UiEndpoint, swaggerOptions.Description);
+            });
 
             app.UseCors("CorsPolicy");
             app.UseAuthorization();
 
-
-            //app.UseCors(_ => _.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

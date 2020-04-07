@@ -9,5 +9,6 @@ namespace Relations.Bll.Interfaces
     public  interface ICountryService
     { 
         Task<IEnumerable<Country>> GetCountriesList();
+        Task<Country> GetCountry(Guid countryId);
     }
 }
