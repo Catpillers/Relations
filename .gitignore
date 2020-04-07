@@ -10,3 +10,6 @@ Relation.API/.vs
 Relation.API/obj
 Relation.API/bin
 .vs
+Relation-SPA/dist
+Relations.App.Tests/obj
+Relations.App.Tests/bin

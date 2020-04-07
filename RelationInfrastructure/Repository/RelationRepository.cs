@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Relations.API.ViewModels;
 using Relations.Dal.Data;
+using Relations.Dal.Helpers;
 using Relations.Dal.Interfaces;
 using Relations.Dal.Models;
 using Relations.Dal.ModelsToModify;
@@ -19,7 +20,7 @@ namespace Relations.Dal.Repository
 
         public async Task<PaginatedList<RelationVm>> GetRelationList(Guid? categoryId, int? pageNumber, string sortField, string sortOrder)
         {
-            int pageSize = 5;
+            int pageSize = 2;
             if (string.IsNullOrWhiteSpace(sortField))
             {
                 sortField = "name";
@@ -114,14 +115,16 @@ namespace Relations.Dal.Repository
             if (relationCategory.CategoryId != updatedRelation.RelationCategoryId)
             {
                 _context.Remove(relationCategory);
+               
                 relationCategory = new RelationCategory
                 {
                     CategoryId = updatedRelation.RelationCategoryId,
                     RelationId = updatedRelation.Id
                 };
-
+                
+                _context.Add(relationCategory);
             }
-            _context.Add(relationCategory);
+            
             await _context.SaveChangesAsync();
         }
 
@@ -138,10 +141,17 @@ namespace Relations.Dal.Repository
         public async Task<Relation> GetRelation(Guid id)
         {
             var relation = await _context.Set<Relation>()
-                .Include(_ => _.RelationAddresses)
+                .Include(_ => _.RelationAddresses).ThenInclude(_ => _.Country) 
                 .Include(_ => _.RelationCategories)
                 .SingleAsync(_ => _.Id == id);
             return relation;
+        }
+
+        public async Task<Relation> GetRelationPostalCodeMask(Guid id)
+        {
+            return await _context.Set<Relation>()
+                .Include(_ => _.RelationAddresses).ThenInclude(_ => _.Country)
+                .SingleAsync(_ => _.Id == id);
         }
     }
 }

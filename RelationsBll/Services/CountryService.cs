@@ -21,5 +21,10 @@ namespace Relations.Bll.Services
         {
             return await _country.GetAll();
         }
+
+        public async Task<Country> GetCountry(Guid countryId)
+        {
+            return await _country.GetById(countryId);
+        }
     }
 }
