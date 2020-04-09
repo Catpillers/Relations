@@ -34,17 +34,17 @@ namespace Relations.Dal.Repository
                 .Where(_ => _.IsDisabled != true)
                 .Select(_ => new RelationVm
                 {   Id= _.Id,
-                    RelationCategoryId = _.RelationCategories.Single().CategoryId,
-                    CountryId = _.RelationAddresses.First().CountryId,
+                    RelationCategoryId = _.RelationCategories.OrderBy(c => c.CategoryId).FirstOrDefault().CategoryId,
+                    CountryId = _.RelationAddresses.OrderBy(c => c.CountryId).FirstOrDefault().CountryId,
                     Name = _.Name,
                     FullName = _.FullName,
                     EmailAddress = _.EmailAddress,
                     TelephoneNumber = _.TelephoneNumber,
-                    CountryName = _.RelationAddresses.First().Country.Name,
-                    City = _.RelationAddresses.First().City,
-                    Street = _.RelationAddresses.First().Street,
-                    Number = _.RelationAddresses.First().Number,
-                    PostalCode = _.RelationAddresses.First().PostalCode
+                    CountryName = _.RelationAddresses.OrderBy(c => c.CountryName).FirstOrDefault().Country.Name,
+                    City = _.RelationAddresses.OrderBy(c => c.City).FirstOrDefault().City,
+                    Street = _.RelationAddresses.OrderBy(c => c.Street).FirstOrDefault().Street,
+                    Number = _.RelationAddresses.OrderBy(c => c.Number).FirstOrDefault().Number,
+                    PostalCode = _.RelationAddresses.OrderBy(c => c.PostalCode).FirstOrDefault().PostalCode
                 }).OrderByDynamic(sortField, sortOrder.ToUpper());
 
             if (categoryId == null)

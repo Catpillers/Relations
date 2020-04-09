@@ -17,6 +17,7 @@ using Relations.Dal.Interfaces;
 using Relations.Dal.Models;
 using Relations.Dal.Repository;
 
+
 namespace Relations.API
 {
     public class Startup
@@ -68,8 +69,8 @@ namespace Relations.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
-
+          
+            
             app.UseRouting();
             
             var swaggerOptions = new SwaggerOptions();
