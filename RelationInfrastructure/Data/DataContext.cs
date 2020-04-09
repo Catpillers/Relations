@@ -7,6 +7,7 @@ namespace Relations.Dal.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
+           Database.EnsureCreated();
         }
 
         public virtual DbSet<AddressType> AddressTypes { get; set; }
@@ -46,10 +47,10 @@ namespace Relations.Dal.Data
                 .HasForeignKey(_ => _.RelationId);
 
             builder.Entity<RelationCategory>()
-                .HasKey(_ => new {_.CategoryId, _.RelationId});
+                .HasKey(_ => new { _.CategoryId, _.RelationId });
 
             builder.Entity<RelationAddress>()
-                .HasKey(_ => new {_.RelationId, _.AddressTypeId});
+                .HasKey(_ => new { _.RelationId, _.AddressTypeId });
         }
     }
 }
